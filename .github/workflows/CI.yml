@@ -29,11 +29,12 @@ jobs:
       - name: Getting Proto
         run: |
           sudo apt-get install -y protobuf-compiler
-          protoc --experimental_allow_proto3_optional
 
       # Cargo Clippy
       - name: Cargo Clippy
-        run: cargo clippy -- -D warnings
+        run: |
+          protoc --experimental_allow_proto3_optional
+          cargo clippy -- -D warnings
 #        working-directory: retail-smartops-user-management-service
 
       # Cargo fmt
