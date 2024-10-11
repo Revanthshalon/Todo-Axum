@@ -1,4 +1,5 @@
 # api-gateway
+[![CI](https://github.com/Revanthshalon/Todo-Axum/actions/workflows/CI.yml/badge.svg)](https://github.com/Revanthshalon/Todo-Axum/actions/workflows/CI.yml)
 
 ## Overview
 `api-gateway` is a Rust-based API gateway service that integrates with various microservices and databases. It leverages frameworks such as `axum`, `sqlx`, `tokio`, and `async-graphql` to provide a robust and scalable API solution.
