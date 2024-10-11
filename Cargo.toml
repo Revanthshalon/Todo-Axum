@@ -1,0 +1,5 @@
+[workspace]
+members = [ "api-gateway","shared", "todo-management-service", "user-management-service"]
+resolver = "2"
+
+[workspace.dependencies]
