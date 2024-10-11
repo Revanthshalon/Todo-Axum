@@ -26,6 +26,9 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
 
+      - name: Getting Proto
+        run: apt-get install protobuf-compiler
+
       # Cargo Clippy
       - name: Cargo Clippy
         run: cargo clippy -- -D warnings
