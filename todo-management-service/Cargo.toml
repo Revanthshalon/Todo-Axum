@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+axum = { workspace = true }
+sqlx = { workspace = true }
+tokio = { workspace = true }
+shared = { path = "../shared" }
+tonic = { workspace = true }
+prost = { workspace = true }
+thiserror = { workspace = true }
+
+[build-dependencies]
+tonic-build = "0.12.3"
