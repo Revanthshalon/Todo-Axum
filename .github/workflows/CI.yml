@@ -32,8 +32,8 @@ jobs:
 
       - name: Install Protobuf Compiler
         run: |
-          apt-get update
-          apt-get install -y protobuf-compiler
+          sudo apt-get update
+          sudo apt-get install -y protobuf-compiler
 
       - name: Compile Protobuf Files
         run: |
