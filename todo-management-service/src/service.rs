@@ -51,15 +51,13 @@ impl TodoServiceTrait for TodoService {
             Ok(todos) => {
                 let todos = todos
                     .into_iter()
-                    .map(|todo| {
-                        Todo {
-                            id: todo.id,
-                            title: todo.title,
-                            description: todo.description,
-                            completed: todo.completed,
-                            created_at: todo.created_at.to_string(),
-                            updated_at: todo.updated_at.map(|x| x.to_string()),
-                        }
+                    .map(|todo| Todo {
+                        id: todo.id,
+                        title: todo.title,
+                        description: todo.description,
+                        completed: todo.completed,
+                        created_at: todo.created_at.to_string(),
+                        updated_at: todo.updated_at.map(|x| x.to_string()),
                     })
                     .collect();
                 Ok(Response::new(TodoList { todos }))
@@ -72,10 +70,7 @@ impl TodoServiceTrait for TodoService {
         let request = request.into_inner();
         let result = self
             .repository
-            .create_todo(
-                request.title.clone(),
-                request.description.clone(),
-            )
+            .create_todo(request.title.clone(), request.description.clone())
             .await;
 
         match result {
@@ -90,7 +85,7 @@ impl TodoServiceTrait for TodoService {
                 };
                 Ok(Response::new(todo))
             }
-            Err(_) => Err(Status::internal("Internal server error"))
+            Err(_) => Err(Status::internal("Internal server error")),
         }
     }
 
@@ -122,7 +117,7 @@ impl TodoServiceTrait for TodoService {
                 };
                 Ok(Response::new(todo))
             }
-            Err(_) => Err(Status::internal("Internal server error"))
+            Err(_) => Err(Status::internal("Internal server error")),
         }
     }
 
@@ -136,7 +131,7 @@ impl TodoServiceTrait for TodoService {
 
         match result {
             Ok(_) => Ok(Response::new(TodoDeleteResponse { success: true })),
-            Err(_) => Err(Status::internal("Internal server error"))
+            Err(_) => Err(Status::internal("Internal server error")),
         }
     }
 }

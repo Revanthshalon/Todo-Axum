@@ -1,10 +1,9 @@
-use db::DbService;
 use repository::TodoRepository;
 use service::{todo::todo_service_server, TodoService};
 use shared::config::AppConfig;
+use shared::db::DbService;
 use tonic::transport::Server;
 
-mod db;
 mod error;
 mod model;
 mod repository;

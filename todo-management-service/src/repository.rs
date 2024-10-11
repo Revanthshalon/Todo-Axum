@@ -1,5 +1,5 @@
-use sqlx::PgPool;
 use crate::{error::TodoError, model::Todo};
+use sqlx::PgPool;
 
 pub struct TodoRepository {
     pool: PgPool,
