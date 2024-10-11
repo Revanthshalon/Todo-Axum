@@ -15,7 +15,19 @@ impl TodoRepository {
         title: String,
         description: Option<String>,
     ) -> Result<Todo, sqlx::Error> {
-        todo!()
+        let todo = sqlx::query_as!(
+            Todo,
+            r#"
+            INSERT INTO todos (title, description)
+            VALUES ($1, $2)
+            RETURNING *
+            "#,
+            title,
+            description
+        )
+        .fetch_one(&self.pool)
+        .await?;
+        Ok(todo)
     }
 
     pub async fn update_todo(
@@ -25,11 +37,30 @@ impl TodoRepository {
         description: Option<String>,
         completed: Option<bool>,
     ) -> Result<Todo, sqlx::Error> {
-        todo!()
+        let todo = sqlx::query_as!(
+            Todo,
+            r#"
+            UPDATE todos
+            SET title = COALESCE($2, title),
+                description = COALESCE($3, description),
+                completed = COALESCE($4, completed),
+                updated_at = now()
+            WHERE id = $1
+            RETURNING *
+            "#,
+            id,
+            title,
+            description,
+            completed
+        )
+        .fetch_one(&self.pool)
+        .await?;
+        Ok(todo)
     }
 
     pub async fn get_todo(&self, id: i32) -> Result<Option<Todo>, TodoError> {
-        let record_option = sqlx::query!(
+        let todo_option = sqlx::query_as!(
+            Todo,
             r#"
             SELECT * FROM todos WHERE id = $1
             "#,
@@ -37,22 +68,31 @@ impl TodoRepository {
         )
         .fetch_optional(&self.pool)
         .await?;
-        let todo_option = record_option.map(|record| Todo {
-            id: record.id,
-            title: record.title,
-            description: record.description,
-            completed: record.completed,
-            created_at: record.created_at.unwrap(),
-            updated_at: record.updated_at,
-        });
         Ok(todo_option)
     }
 
     pub async fn get_all_todos(&self) -> Result<Vec<Todo>, TodoError> {
-        todo!()
+        let todos = sqlx::query_as!(
+            Todo,
+            r#"
+            SELECT * FROM todos
+            "#,
+        )
+        .fetch_all(&self.pool)
+        .await?;
+        Ok(todos)
     }
 
     pub async fn delete_todo(&self, id: i32) -> Result<bool, TodoError> {
-        todo!()
+        let deleted_rows = sqlx::query!(
+            r#"
+            DELETE FROM todos WHERE id = $1
+            "#,
+            id
+        )
+        .execute(&self.pool)
+        .await?
+        .rows_affected();
+        Ok(deleted_rows == 1)
     }
 }

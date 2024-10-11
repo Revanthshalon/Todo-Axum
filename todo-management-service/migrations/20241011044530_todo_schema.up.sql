@@ -3,7 +3,6 @@ CREATE TABLE todos (
     title VARCHAR(100) NOT NULL,
     description TEXT NULL,
     completed BOOLEAN DEFAULT false NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMPTZ NULL
     );
-*
