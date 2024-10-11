@@ -1,5 +1,5 @@
 pub struct AppConfig {
-    todo_db_url: String,
+    db_url: String,
 }
 
 impl AppConfig {
@@ -9,12 +9,12 @@ impl AppConfig {
 
         dotenv().ok();
 
-        let todo_db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+        let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
-        Self { todo_db_url }
+        Self { db_url }
     }
 
-    pub fn get_todo_db_url(&self) -> &str {
-        &self.todo_db_url
+    pub fn get_db_url(&self) -> &str {
+        &self.db_url
     }
 }

@@ -4,9 +4,16 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-async-graphql = { workspace = true }
-async-graphql-axum = { workspace = true }
 axum = { workspace = true }
 sqlx = { workspace = true }
 tokio = { workspace = true }
 shared = { path = "../shared" }
+tonic = { workspace = true }
+prost = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+async-graphql = { version = "7.0.11", features = ["chrono"] }
+async-graphql-axum = "7.0.11"
+
+[build-dependencies]
+tonic-build = "0.12.3"

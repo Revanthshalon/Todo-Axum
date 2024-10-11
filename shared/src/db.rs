@@ -10,7 +10,7 @@ impl DbService {
     pub async fn new(app_config: &AppConfig) -> Self {
         let pool = PgPoolOptions::new()
             .max_connections(5)
-            .connect(app_config.get_todo_db_url())
+            .connect(app_config.get_db_url())
             .await
             .expect("Failed to create pool");
         Self { pool }
