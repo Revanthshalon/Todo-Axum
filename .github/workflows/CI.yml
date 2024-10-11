@@ -35,11 +35,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y protobuf-compiler
+          cargo install protoc-gen-prost
+          export PATH="$HOME/.cargo/bin:$PATH"
 
       - name: Compile Protobuf Files
         run: |
-          mkdir -p src/target  # Ensure the output directory exists
-          protoc --proto_path=proto --experimental_allow_proto3_optional --rust_out=src/target proto/todo.proto
+          mkdir -p src/target 
+          protoc --proto_path=proto --experimental_allow_proto3_optional --prost_out=src/target proto/todo.proto
 
       # Cargo Clippy
       - name: Cargo Clippy
