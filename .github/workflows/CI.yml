@@ -21,23 +21,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
-      - uses: Swatinem/rust-cache@v2
 
-      - name: Getting Proto
+      - name: Cache Cargo registry and build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Protobuf Compiler
         run: |
-          sudo apt-get install -y protobuf-compiler
+          apt-get update
+          apt-get install -y protobuf-compiler
+
+      - name: Compile Protobuf Files
+        run: |
+          mkdir -p src/target  # Ensure the output directory exists
+          protoc --experimental_allow_proto3_optional --rust_out=src/target proto/todo.proto
 
       # Cargo Clippy
       - name: Cargo Clippy
-        run: |
-          protoc --experimental_allow_proto3_optional
-          cargo clippy -- -D warnings
-#        working-directory: retail-smartops-user-management-service
+        run: cargo clippy -- -D warnings
+        # Uncomment if you have a specific working directory
+        # working-directory: retail-smartops-user-management-service
 
       # Cargo fmt
       - name: Cargo Fmt
         run: cargo fmt --check
-#        working-directory: retail-smartops-user-management-service
+        # Uncomment if you have a specific working directory
+        # working-directory: retail-smartops-user-management-service
