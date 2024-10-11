@@ -11,6 +11,7 @@ shared = { path = "../shared" }
 tonic = { workspace = true }
 prost = { workspace = true }
 thiserror = { workspace = true }
+chrono = { workspace = true }
 
 [build-dependencies]
 tonic-build = "0.12.3"

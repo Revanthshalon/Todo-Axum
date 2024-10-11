@@ -24,7 +24,7 @@ impl TodoServiceTrait for TodoService {
     async fn get_todo_by_id(&self, request: Request<TodoId>) -> Result<Response<Todo>, Status> {
         let request = request.into_inner();
 
-        let result = self.repository.get_todo(request.id);
+        let result = self.repository.get_todo(request.id).await;
 
         if let Ok(todo) = result {
             if let Some(todo) = todo {
@@ -36,12 +36,12 @@ impl TodoServiceTrait for TodoService {
                     created_at: todo.created_at.to_string(),
                     updated_at: todo.updated_at.map(|x| x.to_string()),
                 };
-                return Ok(Response::new(todo.into()));
+                Ok(Response::new(todo))
             } else {
-                return Err(Status::not_found("Todo not found"));
+                Err(Status::not_found("Todo not found"))
             }
         } else {
-            return Err(Status::internal("Internal server error"));
+            Err(Status::internal("Internal server error"))
         }
     }
 

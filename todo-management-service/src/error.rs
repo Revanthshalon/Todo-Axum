@@ -7,5 +7,5 @@ pub enum TodoError {
     #[error("Internal server error")]
     InternalServerError,
     #[error("Database error: {0}")]
-    DbError(sqlx::Error),
+    DbError(#[from] sqlx::Error),
 }

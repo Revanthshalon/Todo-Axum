@@ -9,7 +9,7 @@ impl AppConfig {
 
         dotenv().ok();
 
-        let todo_db_url = env::var("TODO_DATABASE_URL").expect("DATABASE_URL must be set");
+        let todo_db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
         Self { todo_db_url }
     }

@@ -1,4 +1,4 @@
-use sqlx::types::chrono::{DateTime, Utc};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, sqlx::FromRow)]
 pub struct Todo {
