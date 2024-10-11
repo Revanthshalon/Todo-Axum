@@ -29,9 +29,9 @@ jobs:
       # Cargo Clippy
       - name: Cargo Clippy
         run: cargo clippy -- -D warnings
-        working-directory: retail-smartops-user-management-service
+#        working-directory: retail-smartops-user-management-service
 
       # Cargo fmt
       - name: Cargo Fmt
         run: cargo fmt --check
-        working-directory: retail-smartops-user-management-service
+#        working-directory: retail-smartops-user-management-service
