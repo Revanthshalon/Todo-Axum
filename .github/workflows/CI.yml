@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Lint & Formatting Checks
+    runs-on: ubuntu-latest
+
+    env:
+      SQLX_OFFLINE: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+
+      # Cargo Clippy
+      - name: Cargo Clippy
+        run: cargo clippy -- -D warnings
+        working-directory: retail-smartops-user-management-service
+
+      # Cargo fmt
+      - name: Cargo Fmt
+        run: cargo fmt --check
+        working-directory: retail-smartops-user-management-service

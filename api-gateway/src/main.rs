@@ -11,7 +11,15 @@ mod schema;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let todo_client = TodoClient::new("http://localhost:50051".to_string()).await?;
+    use dotenvy::dotenv;
+    use std::env;
+
+    dotenv().ok();
+
+    let todo_management_service_url =
+        env::var("TODO_MANAGEMENT_SERVICE_URL").expect("DATABASE_URL must be set");
+
+    let todo_client = TodoClient::new(todo_management_service_url).await?;
     let schema = schema::create_schema(todo_client);
 
     let app = Router::new()

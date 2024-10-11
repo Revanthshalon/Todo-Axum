@@ -1,0 +1,35 @@
+services:
+  todo-management-service:
+    image: todo-management-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - DATABASE_URL=postgresql://user:password@todo-management-db/todo_management
+    depends_on:
+      - todo-management-db
+
+  api-gateway:
+    image: api-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+        - TODO_MANAGEMENT_SERVICE_URL=http://todo-management-service:50051
+    depends_on:
+      - todo-management-service
+
+  todo-management-db:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo_management
+    volumes:
+      - data:/var/lib/postgresql/data

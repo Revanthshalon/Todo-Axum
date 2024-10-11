@@ -45,8 +45,7 @@ impl MutationRoot {
 
     async fn delete_todo_by_id(&self, ctx: &Context<'_>, id: i32) -> Result<bool> {
         let todo_client = ctx.data::<TodoClient>()?;
-        let response = todo_client.delete_todo_by_id(id).await?;
-        Ok(response.into_inner().success)
+        TodoResolver::delete_todo_by_id(todo_client, id).await
     }
 }
 
