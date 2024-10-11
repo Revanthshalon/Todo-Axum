@@ -18,6 +18,7 @@ jobs:
 
     env:
       SQLX_OFFLINE: true
+      CACHE_ON_FAILURE: true
 
     steps:
       - uses: actions/checkout@v3
@@ -38,7 +39,7 @@ jobs:
       - name: Compile Protobuf Files
         run: |
           mkdir -p src/target  # Ensure the output directory exists
-          protoc --experimental_allow_proto3_optional --rust_out=src/target proto/todo.proto
+          protoc --proto_path=proto --experimental_allow_proto3_optional --rust_out=src/target proto/todo.proto
 
       # Cargo Clippy
       - name: Cargo Clippy
